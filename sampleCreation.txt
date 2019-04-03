@@ -1,0 +1,17 @@
+opencv_createsamples -vec img/info -bg -num -bgcolor -bgthresh -inv -randinv -maxidev -maxxangle -maxyangle -maxzangle -show -w -h
+
+-vec <vec_file_name> : Name of the output file containing the positive samples for training.
+-img <image_file_name> : Source object image (e.g., a company logo).
+-bg <background_file_name> : Background description file; contains a list of images which are used as a background for randomly distorted versions of the object.
+-num <number_of_samples> : Number of positive samples to generate.
+-bgcolor <background_color> : Background color (currently grayscale images are assumed); the background color denotes the transparent color. Since there might be compression artifacts, the amount of color tolerance can be specified by -bgthresh. All pixels withing bgcolor-bgthresh and bgcolor+bgthresh range are interpreted as transparent.
+-bgthresh <background_color_threshold>
+-inv : If specified, colors will be inverted.
+-randinv : If specified, colors will be inverted randomly.
+-maxidev <max_intensity_deviation> : Maximal intensity deviation of pixels in foreground samples.
+-maxxangle <max_x_rotation_angle> : Maximal rotation angle towards x-axis, must be given in radians.
+-maxyangle <max_y_rotation_angle> : Maximal rotation angle towards y-axis, must be given in radians.
+-maxzangle <max_z_rotation_angle> : Maximal rotation angle towards z-axis, must be given in radians.
+-show : Useful debugging option. If specified, each sample will be shown. Pressing Esc will continue the samples creation process without showing each sample.
+-w <sample_width> : Width (in pixels) of the output samples.
+-h <sample_height> : Height (in pixels) of the output samples.

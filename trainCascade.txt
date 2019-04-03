@@ -1,0 +1,35 @@
+
+opencv_traincascade
+
+Common arguments:
+
+-data <cascade_dir_name> : Where the trained classifier should be stored. This folder should be created manually beforehand.
+-vec <vec_file_name> : vec-file with positive samples (created by opencv_createsamples utility).
+-bg <background_file_name> : Background description file. This is the file containing the negative sample images.
+-numPos <number_of_positive_samples> : Number of positive samples used in training for every classifier stage.
+-numNeg <number_of_negative_samples> : Number of negative samples used in training for every classifier stage.
+-numStages <number_of_stages> : Number of cascade stages to be trained.
+-precalcValBufSize <precalculated_vals_buffer_size_in_Mb> : Size of buffer for precalculated feature values (in Mb). The more memory you assign the faster the training process, however keep in mind that -precalcValBufSize and -precalcIdxBufSize combined should not exceed you available system memory.
+-precalcIdxBufSize <precalculated_idxs_buffer_size_in_Mb> : Size of buffer for precalculated feature indices (in Mb). The more memory you assign the faster the training process, however keep in mind that -precalcValBufSize and -precalcIdxBufSize combined should not exceed you available system memory.
+-baseFormatSave : This argument is actual in case of Haar-like features. If it is specified, the cascade will be saved in the old format. This is only available for backwards compatibility reasons and to allow users stuck to the old deprecated interface, to at least train models using the newer interface.
+-numThreads <max_number_of_threads> : Maximum number of threads to use during training. Notice that the actual number of used threads may be lower, depending on your machine and compilation options. By default, the maximum available threads are selected if you built OpenCV with TBB support, which is needed for this optimization.
+-acceptanceRatioBreakValue <break_value> : This argument is used to determine how precise your model should keep learning and when to stop. A good guideline is to train not further than 10e-5, to ensure the model does not overtrain on your training data. By default this value is set to -1 to disable this feature.
+
+Cascade parameters:
+
+-stageType <BOOST(default)> : Type of stages. Only boosted classifiers are supported as a stage type at the moment.
+-featureType<{HAAR(default), LBP}> : Type of features: HAAR - Haar-like features, LBP - local binary patterns.
+-w <sampleWidth> : Width of training samples (in pixels). Must have exactly the same value as used during training samples creation (opencv_createsamples utility).
+-h <sampleHeight> : Height of training samples (in pixels). Must have exactly the same value as used during training samples creation (opencv_createsamples utility).
+
+Boosted classifer parameters:
+
+-bt <{DAB, RAB, LB, GAB(default)}> : Type of boosted classifiers: DAB - Discrete AdaBoost, RAB - Real AdaBoost, LB - LogitBoost, GAB - Gentle AdaBoost.
+-minHitRate <min_hit_rate> : Minimal desired hit rate for each stage of the classifier. Overall hit rate may be estimated as (min_hit_rate ^ number_of_stages), [180] §4.1.
+-maxFalseAlarmRate <max_false_alarm_rate> : Maximal desired false alarm rate for each stage of the classifier. Overall false alarm rate may be estimated as (max_false_alarm_rate ^ number_of_stages), [180] §4.1.
+-weightTrimRate <weight_trim_rate> : Specifies whether trimming should be used and its weight. A decent choice is 0.95.
+-maxDepth <max_depth_of_weak_tree> : Maximal depth of a weak tree. A decent choice is 1, that is case of stumps.
+-maxWeakCount <max_weak_tree_count> : Maximal count of weak trees for every cascade stage. The boosted classifier (stage) will have so many weak trees (<=maxWeakCount), as needed to achieve the given -maxFalseAlarmRate.
+Haar-like feature parameters:
+-mode <BASIC (default) | CORE | ALL> : Selects the type of Haar features set used in training. BASIC use only upright features, while ALL uses the full set of upright and 45 degree rotated feature set. See [103] for more details.
+Local Binary Patterns parameters: Local Binary Patterns don't have parameters.
